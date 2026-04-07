@@ -1,0 +1,55 @@
+fraud_detection_system/
+├── docker-compose.yml          # for local dev (Postgres, Redis, app)
+├── Dockerfile
+├── .env.example
+├── requirements.txt
+│
+├── src/
+│   ├── __init__.py
+│   ├── main.py                  # FastAPI entrypoint
+│   ├── config.py                # env variables, thresholds
+│   │
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── routes/
+│   │   │   ├── transactions.py  # POST /transaction
+│   │   │   ├── alerts.py        # GET /alerts
+│   │   │   └── risk.py          # GET /risk-score/{txn_id}
+│   │   ├── dependencies.py      # DB session, model loader
+│   │   └── schemas.py           # Pydantic models
+│   │
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── feature_extractor.py # build feature vectors
+│   │   ├── risk_scorer.py       # hybrid scoring logic
+│   │   ├── rule_engine.py       # rule-based points
+│   │   └── alert_manager.py     # create alerts, notify
+│   │
+│   ├── ml/
+│   │   ├── __init__.py
+│   │   ├── train.py             # train models (offline)
+│   │   ├── predict.py           # load model + inference
+│   │   ├── features.py          # feature names & transforms
+│   │   └── models/              # saved .pkl files
+│   │
+│   ├── db/
+│   │   ├── __init__.py
+│   │   ├── session.py           # SQLAlchemy setup
+│   │   ├── models.py            # ORM models (User, Transaction, etc.)
+│   │   └── crud.py              # DB operations
+│   │
+│   ├── services/
+│   │   ├── user_profile.py      # build/update behavioral baselines
+│   │   └── notification.py      # mock email/sms
+│   │
+│   └── utils/
+│       ├── geo.py               # haversine distance, IP to location
+│       ├── time_utils.py        # hour-of-day, day-of-week
+│       └── logger.py
+│
+├── notebooks/                   # exploration & prototyping
+├── tests/
+├── scripts/
+│   ├── init_db.sql
+│   └── generate_synthetic_data.py
+└── README.md
